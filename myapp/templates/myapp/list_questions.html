@@ -1,0 +1,33 @@
+{% extends "myapp/base.html" %}
+
+{% block title %}List of Questions{% endblock %}
+
+{% block content %}
+<h1>List of Questions</h1>
+{% for document in page_obj %}
+<div class="card">
+    <h5>Question:</h5>
+    <p>{{ document.question }}</p>
+    <h5>Answer:</h5>
+    <p>{{ document.answer }}</p>
+    <form method="post" action="{% url 'delete_document' document.id %}" onsubmit="return confirm('Are you sure you want to delete this document?');">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+</div>
+{% endfor %}
+
+<div class="pagination"> 
+    <span class="step-links">
+           {% if page_obj.has_previous %} 
+               <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a> 
+           {% endif %} 
+           <span class="current"> 
+               Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} 
+           </span> 
+           {% if page_obj.has_next %} 
+              <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+           {% endif %} 
+    </span> 
+</div>
+{% endblock %}

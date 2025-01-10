@@ -1,0 +1,19 @@
+{% extends "myapp/base.html" %}
+
+{% load highlight %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<h3>Search Results</h3>
+<p>Search Query: {{ query }}</p>
+<p>Algorithm: {{ algorithm }}</p>
+{% for document in documents %}
+<div class="card">
+    <h4>Question:</h4>
+    <p>{{ document.question|highlight:tokens|safe }}</p>
+    <h4>Answer:</h4>
+    <p>{{ document.answer|highlight:tokens|safe }}</p>
+</div>
+{% endfor %}
+{% endblock %}
